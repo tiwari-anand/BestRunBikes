@@ -1,0 +1,36 @@
+_schema-version: "3.2"
+ID: best-run-bikes
+version: 0.0.1
+modules:
+- name: best-run-bikes-cap
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: best-run-bikes
+  provides:
+  - name: srv-api
+    properties:
+      url: ${default-url}/v2/low-code
+- name: best-run-bikes-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: best-run-bikes
+  parameters:
+    buildpack: nodejs_buildpack
+
+      
+
+
+resources:
+- name: best-run-bikes
+  type: org.cloudfoundry.existing-service
+
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production
