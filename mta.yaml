@@ -2,6 +2,23 @@ _schema-version: "3.2"
 ID: best-run-bikes
 version: 0.0.1
 modules:
+- name: approuter-best-run-bikes
+  type: approuter.nodejs
+  path: approuter-best-run-bikes
+  requires:
+  - name: best_run_bikes_html_repo_runtime
+  - name: best-run-bikes-xsuaa
+  - name: best-run-bikes-portal
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      strictSSL: false
+      url: ~{url}
+  parameters:
+    disk-quota: 256M
+    memory: 256M
 - name: best-run-bikes-cap
   type: nodejs
   path: gen/srv
@@ -10,7 +27,7 @@ modules:
   provides:
   - name: srv-api
     properties:
-      url: ${default-url}/v2/low-code
+      url: ${default-url}/v2/best-bikes
 - name: best-run-bikes-deployer
   type: hdb
   path: gen/db
@@ -18,15 +35,65 @@ modules:
   - name: best-run-bikes
   parameters:
     buildpack: nodejs_buildpack
-
-      
-
+- name: comsapbestrunproject1
+  type: html5
+  path: project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: best-run-bikes-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: best-run-bikes-html5-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comsapbestrunproject1.zip
+      name: comsapbestrunproject1
+      target-path: resources/
+- name: launchpad
+  type: com.sap.portal.content
+  path: launchpad
+  requires:
+  - name: best-run-bikes-portal
+  - name: best-run-bikes-html5-repo-host
+  - name: best-run-bikes-app-content
+  - name: best-run-bikes-xsuaa
+  parameters:
+    buildpack: https://github.com/cloudfoundry/nodejs-buildpack/releases/download/v1.6.51/nodejs-buildpack-cflinuxfs3-v1.6.51.zip
+    memory: 128M
+    stack: cflinuxfs3
 
 resources:
+- name: best-run-bikes-portal
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: portal
+    service-plan: standard
+- name: best_run_bikes_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: best-run-bikes-xsuaa
+  type: org.cloudfoundry.existing-service
 - name: best-run-bikes
   type: org.cloudfoundry.existing-service
-
+- name: best-run-bikes-html5-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
 parameters:
+  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:

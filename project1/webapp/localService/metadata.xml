@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="BestBikesService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="BicycleType" EntityType="BestBikesService.BicycleType"/>
+                <EntitySet Name="BicycleType_texts" EntityType="BestBikesService.BicycleType_texts"/>
+                <EntitySet Name="Service" EntityType="BestBikesService.Service"/>
+                <EntitySet Name="ServiceType" EntityType="BestBikesService.ServiceType"/>
+                <EntitySet Name="ServiceType_texts" EntityType="BestBikesService.ServiceType_texts"/>
+                <AssociationSet Name="BicycleType_texts_1" Association="BestBikesService.BicycleType_texts_1">
+                    <End Role="BicycleType" EntitySet="BicycleType"/>
+                    <End Role="BicycleType_texts" EntitySet="BicycleType_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="BicycleType_localized" Association="BestBikesService.BicycleType_localized">
+                    <End Role="BicycleType" EntitySet="BicycleType"/>
+                    <End Role="BicycleType_texts" EntitySet="BicycleType_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="Service_serviceType" Association="BestBikesService.Service_serviceType">
+                    <End Role="Service" EntitySet="Service"/>
+                    <End Role="ServiceType" EntitySet="ServiceType"/>
+                </AssociationSet>
+                <AssociationSet Name="Service_bicycleType" Association="BestBikesService.Service_bicycleType">
+                    <End Role="Service" EntitySet="Service"/>
+                    <End Role="BicycleType" EntitySet="BicycleType"/>
+                </AssociationSet>
+                <AssociationSet Name="ServiceType_texts_1" Association="BestBikesService.ServiceType_texts_1">
+                    <End Role="ServiceType" EntitySet="ServiceType"/>
+                    <End Role="ServiceType_texts" EntitySet="ServiceType_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="ServiceType_localized" Association="BestBikesService.ServiceType_localized">
+                    <End Role="ServiceType" EntitySet="ServiceType"/>
+                    <End Role="ServiceType_texts" EntitySet="ServiceType_texts"/>
+                </AssociationSet>
+            </EntityContainer>
+            <EntityType Name="BicycleType">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="texts" Relationship="BestBikesService.BicycleType_texts_1" FromRole="BicycleType" ToRole="BicycleType_texts"/>
+                <NavigationProperty Name="localized" Relationship="BestBikesService.BicycleType_localized" FromRole="BicycleType" ToRole="BicycleType_texts"/>
+            </EntityType>
+            <EntityType Name="BicycleType_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <EntityType Name="Service">
+                <Key>
+                    <PropertyRef Name="ServiceID"/>
+                </Key>
+                <Property Name="ServiceID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="CustomerNo" Type="Edm.String" MaxLength="100"/>
+                <Property Name="FullName" Type="Edm.String" MaxLength="100"/>
+                <Property Name="City" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Country" Type="Edm.String" MaxLength="100"/>
+                <Property Name="Pincode" Type="Edm.String" MaxLength="100"/>
+                <Property Name="OrderNo" Type="Edm.String" MaxLength="100"/>
+                <NavigationProperty Name="serviceType" Relationship="BestBikesService.Service_serviceType" FromRole="Service" ToRole="ServiceType"/>
+                <NavigationProperty Name="bicycleType" Relationship="BestBikesService.Service_bicycleType" FromRole="Service" ToRole="BicycleType"/>
+                <Property Name="purchaseDate" Type="Edm.String"/>
+                <Property Name="completedDate" Type="Edm.String"/>
+                <Property Name="notes" Type="Edm.String"/>
+                <Property Name="serviceType_code" Type="Edm.String"/>
+                <Property Name="bicycleType_code" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="ServiceType">
+                <Key>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <Property Name="name" Type="Edm.String"/>
+                <NavigationProperty Name="texts" Relationship="BestBikesService.ServiceType_texts_1" FromRole="ServiceType" ToRole="ServiceType_texts"/>
+                <NavigationProperty Name="localized" Relationship="BestBikesService.ServiceType_localized" FromRole="ServiceType" ToRole="ServiceType_texts"/>
+            </EntityType>
+            <EntityType Name="ServiceType_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="code"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <Association Name="BicycleType_texts_1">
+                <End Role="BicycleType" Type="BestBikesService.BicycleType" Multiplicity="*"/>
+                <End Role="BicycleType_texts" Type="BestBikesService.BicycleType_texts" Multiplicity="*">
+                    <OnDelete Action="Cascade"/>
+                </End>
+            </Association>
+            <Association Name="BicycleType_localized">
+                <End Role="BicycleType" Type="BestBikesService.BicycleType" Multiplicity="*"/>
+                <End Role="BicycleType_texts" Type="BestBikesService.BicycleType_texts" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="BicycleType_texts">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="BicycleType">
+                        <PropertyRef Name="code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Service_serviceType">
+                <End Role="Service" Type="BestBikesService.Service" Multiplicity="*"/>
+                <End Role="ServiceType" Type="BestBikesService.ServiceType" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="ServiceType">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="Service">
+                        <PropertyRef Name="serviceType_code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Service_bicycleType">
+                <End Role="Service" Type="BestBikesService.Service" Multiplicity="*"/>
+                <End Role="BicycleType" Type="BestBikesService.BicycleType" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="BicycleType">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="Service">
+                        <PropertyRef Name="bicycleType_code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ServiceType_texts_1">
+                <End Role="ServiceType" Type="BestBikesService.ServiceType" Multiplicity="*"/>
+                <End Role="ServiceType_texts" Type="BestBikesService.ServiceType_texts" Multiplicity="*">
+                    <OnDelete Action="Cascade"/>
+                </End>
+            </Association>
+            <Association Name="ServiceType_localized">
+                <End Role="ServiceType" Type="BestBikesService.ServiceType" Multiplicity="*"/>
+                <End Role="ServiceType_texts" Type="BestBikesService.ServiceType_texts" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="ServiceType_texts">
+                        <PropertyRef Name="code"/>
+                    </Principal>
+                    <Dependent Role="ServiceType">
+                        <PropertyRef Name="code"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Annotations Target="BestBikesService.BicycleType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="BestBikesService.BicycleType/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.BicycleType/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Text" Path="name">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+                </Annotation>
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.BicycleType/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="BicycleType"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.BicycleType_texts/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="Label" String="Incident Info"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Main"/>
+                                        <PropertyValue Property="Label" String="Details"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Main">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="ServiceID"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="CustomerNo"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="City"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Country"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="serviceType_code"/>
+                                    <PropertyValue Property="Label" String="Service Type"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="bicycleType_code"/>
+                                    <PropertyValue Property="Label" String="Bicycle Type"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="CustomerNo"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="ServiceID"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="TypeName" String="Service"/>
+                        <PropertyValue Property="TypeNamePlural" String="Incidents"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ServiceID"/>
+                            <PropertyValue Property="Label" String="ServiceID"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="FullName"/>
+                            <PropertyValue Property="Label" String="CustomerName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="serviceType/name"/>
+                            <PropertyValue Property="Label" String="Service Type"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="City"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="bicycleType/name"/>
+                            <PropertyValue Property="Label" String="Bicycle Type"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>ServiceID</PropertyPath>
+                        <PropertyPath>CustomerNo</PropertyPath>
+                        <PropertyPath>City</PropertyPath>
+                        <PropertyPath>Country</PropertyPath>
+                        <PropertyPath>Pincode</PropertyPath>
+                        <PropertyPath>serviceType_code</PropertyPath>
+                        <PropertyPath>bicycleType_code</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/CustomerNo" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Customer Number"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/FullName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Full Name"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/serviceType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Service Type"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/bicycleType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Bicycle Type"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/purchaseDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Purchased on"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/completedDate" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Completed Date"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/notes" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Notes"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/serviceType_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Service Type"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Service Type"/>
+                        <PropertyValue Property="CollectionPath" String="ServiceType"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="serviceType_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="BestBikesService.Service/bicycleType_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Bicycle Type"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="Bicycle Type"/>
+                        <PropertyValue Property="CollectionPath" String="BicycleType"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="bicycleType_code"/>
+                                    <PropertyValue Property="ValueListProperty" String="code"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="BestBikesService.ServiceType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="BestBikesService.ServiceType/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.ServiceType/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Text" Path="name">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextOnly"/>
+                </Annotation>
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.ServiceType/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="ServiceType"/>
+            </Annotations>
+            <Annotations Target="BestBikesService.ServiceType_texts/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
