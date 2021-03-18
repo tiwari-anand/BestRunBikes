@@ -13,19 +13,20 @@ HeaderInfo: {
 TypeName: 'Service',
 TypeNamePlural: 'Service Entries',
 Title: { Value: serviceType_code },
-Description: { Value: CustomerMail }
+Description: { Value: FullName }
 },
 SelectionFields: [ Country, serviceType_code,bicycleType_code, completed_code],
 LineItem: [
-{ Value: CustomerMail, Label:'Customer EmailId' },
+{ Value: FullName, Label:'Customer Name'},
 { Value: serviceType.name ,Label:'Service Type'},
 { Value: bicycleType.name, Label:'Bicycle Type' },
 { Value: City },
+{ Value: completed.name },
 ],
 Facets: [
 {
 $Type: 'UI.CollectionFacet',
-Label: 'Incident Info',
+Label: 'Service Details',
 Facets: [
 {$Type: 'UI.ReferenceFacet', Target: '@UI.FieldGroup#Main', Label: 'Details'}
 ]
@@ -33,7 +34,8 @@ Facets: [
 ],
 FieldGroup#Main: {
 Data: [
-{ Value: CustomerMail },
+{ Value: FullName, Label:'Customer Name' },
+{ Value: Description, Label:'Description' },
 { Value: City ,Label:'City'},
 { Value: Country , Label:'Country'},
 { Value: Pincode , Label:'Pincode'},

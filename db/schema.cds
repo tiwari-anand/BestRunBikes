@@ -19,14 +19,15 @@ entity Service {
     key ServiceID : UUID;
     CustomerMail :  String(100)   @title  : 'Customer EmailId';
     FullName : String(100) @title : 'Full Name';
+    Description : String;
     City : String(100);
     Country : String(100);
     Pincode : String(100);
     OrderNo :String(100);
     serviceType : Association to ServiceType  @title  : 'Service Type';
     bicycleType : Association to BicycleType  @title  : 'Bicycle Type';
-    purchaseDate : String @title  : 'Purchased on';
-    completedDate : String @title  : 'Completed Date';
+    purchaseDate : Date @title  : 'Purchased on';
+    completedDate : Date @title  : 'Completed Date';
     notes : String @title : 'Notes';
     completed : Association to Status @title : 'Service Completed';
 }
