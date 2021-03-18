@@ -7,7 +7,7 @@
     "routes": [
         {
             "source": "^/v2/best-bikes/(.*)$",
-            "authenticationType": "none",
+            "authenticationType": "xsuaa",
             "destination": "srv-api",
             "target": "$1",
             "csrfProtection": false

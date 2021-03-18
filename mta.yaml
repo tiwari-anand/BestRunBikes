@@ -24,6 +24,7 @@ modules:
   path: gen/srv
   requires:
   - name: best-run-bikes
+  - name: best-run-bikes-xsuaa
   provides:
   - name: srv-api
     properties:

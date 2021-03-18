@@ -9,7 +9,10 @@
         "@sap/cds": "^4",
         "@sap/cds-odata-v2-adapter-proxy": "^1.5.9",
         "@sap/hana-client": "^2.7.26",
-        "express": "^4"
+        "express": "^4",
+        "passport": "^0.4.1",
+        "@sap/xssec": "^2.1.17",
+        "@sap/xsenv": "^3.0.0"
     },
     "devDependencies": {
         "sqlite3": "5.0.0"
@@ -25,6 +28,11 @@
         },
         "hana": {
             "deploy-format": "hdbtable"
+        },
+        "auth": {
+            "passport": {
+                "strategy": "JWT"
+            }
         }
     }
 }
