@@ -4,11 +4,12 @@ module.exports = async srv => {
 
     const db = await cds.connect.to('db'), { Service } = db.entities;
     srv.before('CREATE', 'Service', async (req) => {
-        req.data.CustomerNo = req.user.id;
+        req.data.CustomerMail = req.user.id;
     });
 
     srv.before('READ', 'Service', req =>
-        req.query.where('CustomerNo =', req.user.id)
+    {
+        console.log(JSON.stringify(req.user));
+        req.query.where('CustomerMail =', req.user.id)}
     );
-
 }

@@ -6,9 +6,9 @@ entity ServicesCodeList : sap.common.CodeList {
  name : String;
 }
 
-// entity Status: IncidentsCodeList{
-//     key code: String default 'OPEN';
-// }
+entity Status: ServicesCodeList{
+    key code: String default 'NO';
+}
 
 entity ServiceType: ServicesCodeList{}
 
@@ -17,7 +17,7 @@ entity BicycleType : ServicesCodeList {}
 
 entity Service {
     key ServiceID : UUID;
-    CustomerNo :  String(100)   @title  : 'Customer Number';
+    CustomerMail :  String(100)   @title  : 'Customer EmailId';
     FullName : String(100) @title : 'Full Name';
     City : String(100);
     Country : String(100);
@@ -28,6 +28,7 @@ entity Service {
     purchaseDate : String @title  : 'Purchased on';
     completedDate : String @title  : 'Completed Date';
     notes : String @title : 'Notes';
+    completed : Association to Status @title : 'Service Completed';
 }
 
 // entity Logs{

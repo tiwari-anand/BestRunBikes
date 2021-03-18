@@ -2,6 +2,7 @@ using { sap.capire.dev as db } from '../db/schema';
 
 service BestBikesService @(requires: 'authenticated-user'){
     entity Service as projection on db.Service;
+    entity Status as projection on db.Status;
     entity ServiceType as projection on db.ServiceType;
     entity BicycleType as projection on db.BicycleType;
 }
@@ -10,19 +11,16 @@ annotate BestBikesService.Service with @(
 UI: {
 HeaderInfo: {
 TypeName: 'Service',
-TypeNamePlural: 'Incidents',
-Title: { Value: ServiceID },
-Description: { Value: CustomerNo }
+TypeNamePlural: 'Service Entries',
+Title: { Value: serviceType_code },
+Description: { Value: CustomerMail }
 },
-SelectionFields: [ ServiceID, CustomerNo, City,Country, Pincode,serviceType_code,bicycleType_code],
+SelectionFields: [ Country, serviceType_code,bicycleType_code, completed_code],
 LineItem: [
-// { Value: ID },
-// { Value: title },
-{ Value: ServiceID, Label:'ServiceID'  },
-{ Value: FullName, Label:'CustomerName' },
+{ Value: CustomerMail, Label:'Customer EmailId' },
 { Value: serviceType.name ,Label:'Service Type'},
+{ Value: bicycleType.name, Label:'Bicycle Type' },
 { Value: City },
-{ Value: bicycleType.name, Label:'Bicycle Type' }
 ],
 Facets: [
 {
@@ -35,29 +33,31 @@ Facets: [
 ],
 FieldGroup#Main: {
 Data: [
-//{ Value: ID },
-{ Value: ServiceID },
-{ Value: CustomerNo },
-{ Value: City },
-//{ Value: status_code , Label:'Status'},
-{ Value: Country },
+{ Value: CustomerMail },
+{ Value: City ,Label:'City'},
+{ Value: Country , Label:'Country'},
+{ Value: Pincode , Label:'Pincode'},
 { Value: serviceType_code, Label:'Service Type' },
-//{ Value: closed_on  },
+{ Value: purchaseDate  },
 { Value: bicycleType_code, Label:'Bicycle Type'},
-//{ Value: assignedIndividual_code ,Label:'Assigned Individual'}
 ]
 }
 }
 );
 
 annotate BestBikesService.Service with {
- ServiceType @Common : {
+ serviceType @Common : {
  Text : serviceType.name,
  TextArrangement : #TextOnly,
  ValueListWithFixedValues
  };
- BicycleType @Common : {
+ bicycleType @Common : {
  Text : bicycleType.name,
+ TextArrangement : #TextOnly,
+ ValueListWithFixedValues
+ };
+ completed @Common : {
+ Text : completed.name,
  TextArrangement : #TextOnly,
  ValueListWithFixedValues
  };
@@ -77,4 +77,12 @@ annotate BestBikesService.BicycleType with {
  TextArrangement : #TextOnly
  };
  name @title : 'BicycleType';
+};
+
+annotate BestBikesService.Status with {
+ code @UI.Hidden @Common : { 
+ Text : name,
+ TextArrangement : #TextOnly
+ };
+ name @title : 'Service Completed';
 };
