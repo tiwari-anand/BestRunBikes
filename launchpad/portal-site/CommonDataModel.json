@@ -9,7 +9,7 @@
 			"_version": "3.0.0",
 			"identification": {
 				"id": "defaultCatalogId",
-				"title": "{{title}}",
+				"title": "Best Run Bikes",
 				"entityType": "catalog",
 				"i18n": "i18n/defaultCatalogId.properties"
 			},
@@ -21,7 +21,7 @@
 			"_version": "3.0.0",
 			"identification": {
 				"id": "workflow-appds",
-				"title": "{{title}}",
+				"title": "Best Run Bikes",
 				"entityType": "group",
 				"i18n": "i18n/workflow-appds.properties"
 			},
