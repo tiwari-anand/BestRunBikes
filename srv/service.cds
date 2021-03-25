@@ -56,6 +56,14 @@ annotate BestBikesService.Service with @(UI : {
             Target : '@UI.FieldGroup#Main',
             Label  : 'Details'
         }]
+    },
+    {
+        $Type  : 'UI.CollectionFacet',
+        Label  : 'Problem Details',
+        Facets : [{
+            $Type  : 'UI.ReferenceFacet',
+            Target : '@UI.FieldGroup#Secondary'
+        }]
     }],
     FieldGroup #Main : {Data : [
     {
@@ -75,8 +83,8 @@ annotate BestBikesService.Service with @(UI : {
         Label : 'Country'
     },
     {
-        Value : Pincode,
-        Label : 'Pincode'
+        Value : PostalCode,
+        Label : 'Postal Code'
     },
     {
         Value : serviceType_code,
@@ -86,6 +94,20 @@ annotate BestBikesService.Service with @(UI : {
     {
         Value : bicycleType_code,
         Label : 'Bicycle Type'
+    }
+    ]},
+    FieldGroup #Secondary : {Data : [
+    {
+        Value : gearProblem_code,
+        Label : 'Gear related problems'
+    },
+    {
+        Value : tyreProblem_code,
+        Label : 'Tyre related problems'
+    },
+    {
+        Value : bodyProblem_code,
+        Label : 'Body related problems'
     }
     ]}
 });
@@ -105,6 +127,21 @@ annotate BestBikesService.Service with {
     };
     completed   @Common : {
         Text            : completed.name,
+        TextArrangement : #TextOnly,
+        ValueListWithFixedValues
+    };
+    gearProblem   @Common : {
+        Text            : gearProblem.name,
+        TextArrangement : #TextOnly,
+        ValueListWithFixedValues
+    };
+    tyreProblem   @Common : {
+        Text            : tyreProblem.name,
+        TextArrangement : #TextOnly,
+        ValueListWithFixedValues
+    };
+    bodyProblem   @Common : {
+        Text            : bodyProblem.name,
         TextArrangement : #TextOnly,
         ValueListWithFixedValues
     };
@@ -132,4 +169,28 @@ annotate BestBikesService.Status with {
         TextArrangement : #TextOnly
     };
     name @title :              'Service Completed';
+};
+
+annotate BestBikesService.Gears with {
+    code @UI.Hidden  @Common : {
+        Text            : name,
+        TextArrangement : #TextOnly
+    };
+    name @title :              'Gear related problems';
+};
+
+annotate BestBikesService.Tyres with {
+    code @UI.Hidden  @Common : {
+        Text            : name,
+        TextArrangement : #TextOnly
+    };
+    name @title :              'Tyres related problems';
+};
+
+annotate BestBikesService.Body with {
+    code @UI.Hidden  @Common : {
+        Text            : name,
+        TextArrangement : #TextOnly
+    };
+    name @title :              'Body related problems';
 };
