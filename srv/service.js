@@ -5,6 +5,7 @@ module.exports = async srv => {
     const db = await cds.connect.to('db'), { Service } = db.entities;
     srv.before('CREATE', 'Service', async (req) => {
         req.data.CustomerMail = req.user.id;
+        req.data.FullName = req.user.attr.givenName + " " + req.user.attr.familyName;
     });
 
     srv.before('READ', 'Service', req => {

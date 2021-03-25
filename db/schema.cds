@@ -21,7 +21,7 @@ entity Body        : ServicesCodeList {}
 entity Service {
     key ServiceID     : UUID;
         CustomerMail  : String(100)                @title : 'Customer EmailId';
-        FullName      : String(100)                @title : 'Full Name' @readonly;
+        FullName      : String(100)                @title : 'Full Name';
         Description   : String;
         City          : String(100);
         Country       : String(100);

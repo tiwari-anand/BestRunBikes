@@ -67,10 +67,6 @@ annotate BestBikesService.Service with @(UI : {
     }],
     FieldGroup #Main : {Data : [
     {
-        Value : FullName,
-        Label : 'Customer Name'
-    },
-    {
         Value : Description,
         Label : 'Description'
     },
